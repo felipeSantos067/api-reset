@@ -235,9 +235,9 @@ app.get('/api/vendas/relatorio', (req, res) => {
   });
 });
 
-// app.use('/*', (req, res) => {
-//   return res.status(404).json({ erro: "Essa rota nao existe!" });
-// });
+ //app.use('*', (req, res) => {
+   //return res.status(404).json({ erro: "Essa rota nao existe!" });
+ //});
 
 app.listen(PORT, () => {
   console.log(" Servidor ligado na porta " + PORT);
