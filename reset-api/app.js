@@ -1,10 +1,8 @@
 import express from 'express';
 
 const app = express();
-const PORT = 3000;
 
 app.use(express.json());
-
 
 const produtos = [
   { id: 1, nome: "Arroz 5kg", preco: 25.90, estoqueAtual: 20, estoqueMinimo: 5, fornecedorId: 1, categoria: "alimentos" },
@@ -19,13 +17,11 @@ const fornecedores = [
 const movimentacoes = [];
 const vendas = [];
 
-
 function middlewareLog(req, res, next) {
   console.log("Acessaram a rota: " + req.method + " " + req.url);
   next();
 }
 app.use(middlewareLog);
-
 
 function middlewareValidarProduto(req, res, next) {
   const corpo = req.body;
@@ -34,7 +30,6 @@ function middlewareValidarProduto(req, res, next) {
   }
   next();
 }
-
 
 function middlewareValidarVenda(req, res, next) {
   const corpo = req.body;
@@ -46,7 +41,6 @@ function middlewareValidarVenda(req, res, next) {
   }
   next();
 }
-
 
 app.post('/api/fornecedores', (req, res) => {
   const corpo = req.body;
@@ -64,11 +58,9 @@ app.post('/api/fornecedores', (req, res) => {
   return res.status(201).json(novoFornecedor);
 });
 
-
 app.get('/api/fornecedores', (req, res) => {
   return res.json(fornecedores);
 });
-
 
 app.post('/api/produtos', middlewareValidarProduto, (req, res) => {
   const corpo = req.body;
@@ -87,7 +79,6 @@ app.post('/api/produtos', middlewareValidarProduto, (req, res) => {
   return res.status(201).json(novoProduto);
 });
 
-
 app.get('/api/produtos', (req, res) => {
   const filtro = req.query.categoria;
 
@@ -104,6 +95,15 @@ app.get('/api/produtos', (req, res) => {
   return res.json(produtos);
 });
 
+app.get('/api/produtos/estoque/baixo', (req, res) => {
+  const estoqueBaixo = [];
+  for (let i = 0; i < produtos.length; i++) {
+    if (produtos[i].estoqueAtual < produtos[i].estoqueMinimo) {
+      estoqueBaixo.push(produtos[i]);
+    }
+  }
+  return res.json(estoqueBaixo);
+});
 
 app.get('/api/produtos/:id', (req, res) => {
   const idProcurado = parseInt(req.params.id);
@@ -121,21 +121,6 @@ app.get('/api/produtos/:id', (req, res) => {
 
   return res.json(encontrado);
 });
-
-
-app.get('/api/produtos/estoque/baixo', (req, res) => {
-  const estoqueBaixo = [];
-  for (let i = 0; i < produtos.length; i++) {
-    if (produtos[i].estoqueAtual < produtos[i].estoqueMinimo) {
-      estoqueBaixo.push(produtos[i]);
-    }
-  }
-  return res.json(estoqueBaixo);
-});
-
-
-
-
 
 app.post('/api/produtos/entrada', (req, res) => {
   const corpo = req.body;
@@ -163,9 +148,8 @@ app.post('/api/produtos/entrada', (req, res) => {
     quantidade: parseInt(corpo.quantidade)
   });
 
-  return res.status(201).json({ msg: "Estoque atualizado!", produto });
+  return res.status(201).json({ msg: "Estoque updated!", produto });
 });
-
 
 app.post('/api/vendas', middlewareValidarVenda, (req, res) => {
   const listaVenda = req.body.itens;
@@ -187,21 +171,17 @@ app.post('/api/vendas', middlewareValidarVenda, (req, res) => {
       return res.status(422).json({ erro: "O produto ID " + item.produtoId + " nao existe!" });
     }
 
-
     if (produto.estoqueAtual < item.quantidade) {
       return res.status(422).json({ erro: "Estoque insuficiente para: " + produto.nome });
     }
 
-
     copiaEstoqueAntesdaVenda.push({ produtoId: produto.id, estoqueVelho: produto.estoqueAtual });
-    
 
     produto.estoqueAtual -= item.quantidade;
     totalDinheiro += produto.preco * item.quantidade;
 
     itensVendidos.push({ produtoId: produto.id, nome: produto.nome, quantidade: item.quantidade, preco: produto.preco });
   }
-
 
   const novaVenda = {
     id: vendas.length + 1,
@@ -213,7 +193,6 @@ app.post('/api/vendas', middlewareValidarVenda, (req, res) => {
 
   return res.status(201).json({ msg: "Venda aprovada!", novaVenda });
 });
-
 
 app.get('/api/vendas/relatorio', (req, res) => {
   const quantidadeVendas = vendas.length;
@@ -235,15 +214,4 @@ app.get('/api/vendas/relatorio', (req, res) => {
   });
 });
 
- //app.use('*', (req, res) => {
-   //return res.status(404).json({ erro: "Essa rota nao existe!" });
- //});
-
-app.listen(PORT, () => {
-  console.log(" Servidor ligado na porta " + PORT);
-});
-
-
-
-
-
+export default app;
