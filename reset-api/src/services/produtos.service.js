@@ -40,14 +40,28 @@ export function buscarPorId(id) {
 }
 
 export function cadastrar(corpo) {
+  let categoriaDefinida = "";
+  if (corpo.categoria) {
+    categoriaDefinida = corpo.categoria;
+  } else {
+    categoriaDefinida = "geral";
+  }
+
+  let estoqueMinimoDefinido = 5;
+  if (corpo.estoqueMinimo) {
+    estoqueMinimoDefinido = Number(corpo.estoqueMinimo);
+  } else {
+    estoqueMinimoDefinido = 5;
+  }
+
   const novoProduto = {
     id: produtos.length + 1,
     nome: corpo.nome,
     preco: Number(corpo.preco),
     estoqueAtual: 0,
-    estoqueMinimo: corpo.estoqueMinimo ? Number(corpo.estoqueMinimo) : 5,
+    estoqueMinimo: estoqueMinimoDefinido,
     fornecedorId: Number(corpo.fornecedorId),
-    categoria: corpo.categoria ? corpo.categoria : "geral"
+    categoria: categoriaDefinida
   };
 
   produtos.push(novoProduto);
@@ -109,7 +123,7 @@ export function realizarVenda(itensVenda) {
     produto.estoqueAtual -= item.quantidade;
     totalDinheiro += produto.preco * item.quantidade;
 
-    itensVendidos.push({ produtoId: produto.id, nome: produto.nome, quantidade: item.quantidade, preco: produto.preco });
+    itensVendidos.push({ produtoId: produto.id, nome: produto.nome, House: item.quantidade, quantidade: item.quantidade, preco: produto.preco });
   }
 
   const novaVenda = {
