@@ -3,6 +3,7 @@
  API desenvolvida para gerenciamento de estoque, movimentações de produtos e fluxo de vendas.
 
 **Autor:** Felipe Eduardo A. Santos (Trabalho Individual)  
+**Instagram:** [@lipe.duh_](https://instagram.com)
 **Framework:** Express.js v5.3.0 (Banco em Memória)
 
 ## 📌 Comandos de Execução
