@@ -4,7 +4,7 @@
   "type": "module",
   "main": "app.js",
   "scripts": {
-   "db:up": "docker start mongo-tarefas || docker run -d --name mongo-tarefas -p 127.0.0.1:27017:27017 -v mongo-tarefas-data:/data/db mongo:8",
+    "db:up": "docker start mongo-tarefas || docker run -d --name mongo-tarefas -p 127.0.0.1:27017:27017 -v mongo-tarefas-data:/data/db mongo:8",
     "db:down": "docker stop mongo-tarefas",
     "db:logs": "docker logs -f mongo-tarefas",
     "db:reset": "docker rm -f mongo-tarefas; docker volume rm mongo-tarefas-data",
@@ -13,6 +13,8 @@
     "start": "node src/server.js"
   },
   "dependencies": {
-    "express": "^5.3.0"
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "mongodb": "^7.8.0"
   }
 }
