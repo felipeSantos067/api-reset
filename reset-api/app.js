@@ -13,9 +13,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(fornecedorRoutes);
-app.use(produtoRoutes);
-app.use(movimentacaoRoutes);
-app.use(vendaRoutes);
+app.use('/fornecedores', fornecedorRoutes);
+app.use('/produtos', produtoRoutes);
+app.use('/movimentacoes', movimentacaoRoutes);
+app.use('/vendas', vendaRoutes);
 
 export default app;
