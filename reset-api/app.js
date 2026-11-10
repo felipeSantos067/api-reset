@@ -1,6 +1,8 @@
 import express from 'express';
 import fornecedorRoutes from './src/routes/fornecedores.routes.js';
 import produtoRoutes from './src/routes/produtos.routes.js';
+import movimentacaoRoutes from './src/routes/movimentacoes.routes.js';
+import vendaRoutes from './src/routes/vendas.routes.js';
 
 const app = express();
 
@@ -13,5 +15,7 @@ app.use((req, res, next) => {
 
 app.use(fornecedorRoutes);
 app.use(produtoRoutes);
+app.use(movimentacaoRoutes);
+app.use(vendaRoutes);
 
 export default app;
