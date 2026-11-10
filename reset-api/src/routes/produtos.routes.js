@@ -18,11 +18,11 @@ function middlewareValidarVenda(req, res, next) {
   next();
 }
 
-router.get('/api/produtos', produtoController.listarTodos);
-router.get('/api/produtos/estoque/baixo', produtoController.listarBaixoEstoque);
-router.get('/api/produtos/:id', produtoController.buscarPorId);
-router.post('/api/produtos', middlewareValidarProduto, produtoController.criar);
-router.post('/api/produtos/entrada', produtoController.entradaEstoque);
+router.get('/', produtoController.listarTodos);
+router.get('/', produtoController.listarBaixoEstoque);
+router.get('/', produtoController.buscarPorId);
+router.post('/', middlewareValidarProduto, produtoController.criar);
+router.post('/', produtoController.entradaEstoque);
 
 router.post('/api/vendas', middlewareValidarVenda, produtoController.registrarVenda);
 router.get('/api/vendas/relatorio', produtoController.obterRelatorio);
