@@ -14,7 +14,7 @@ function middlewareValidarVenda(req, res, next) {
   next();
 }
 
-router.post('/api/vendas', middlewareValidarVenda, vendasController.criarVenda);
-router.get('/api/vendas/relatorio', vendasController.obterRelatorio);
+router.post('/', middlewareValidarVenda, vendasController.criarVenda);
+router.get('/', vendasController.obterRelatorio);
 
 export default router;
