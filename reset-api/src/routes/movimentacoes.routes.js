@@ -3,6 +3,6 @@ import * as movimentacoesController from '../controllers/movimentacoes.controlle
 
 const router = Router();
 
-router.post('/api/produtos/entrada', movimentacoesController.entradaEstoque);
+router.post('/', movimentacoesController.entradaEstoque);
 
 export default router;
